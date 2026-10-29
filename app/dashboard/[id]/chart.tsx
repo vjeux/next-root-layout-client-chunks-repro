@@ -1,13 +1,9 @@
 "use client";
 
 import { useState } from "react";
+import { CHART_LIBRARY } from "./chart-library";
 
-// Only `/dashboard/[id]` renders this component. The string stands in for a large dependency.
-const WORDS = Array.from(
-  { length: 4000 },
-  (_, i) => `HEAVY_MARKER_word_${i}_${(i * 7919) % 10007}`,
-);
-
+// Only `/dashboard/[id]` renders this component.
 export default function Chart({
   id,
   onEvent,
@@ -15,15 +11,15 @@ export default function Chart({
   id: string;
   onEvent: (event: string) => void;
 }) {
-  const [index, setIndex] = useState(0);
+  const [offset, setOffset] = useState(0);
   return (
     <button
       onClick={() => {
         onEvent("click");
-        setIndex((index + 1) % WORDS.length);
+        setOffset((offset + 8) % CHART_LIBRARY.length);
       }}
     >
-      {id} {WORDS[index]}
+      {id} {CHART_LIBRARY.slice(offset, offset + 8)}
     </button>
   );
 }
